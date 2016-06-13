@@ -44,9 +44,9 @@ namespace EvalTask
                 Console.WriteLine(output.Substring(0, output.Length - 2));
             else
             {
-                if (isComma)
+                /*if (isComma)
                     Console.WriteLine(output.Replace(".", ","));
-                else
+                else*/
                     Console.WriteLine(output);
             }
             Console.ReadLine();
