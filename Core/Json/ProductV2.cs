@@ -1,4 +1,4 @@
-﻿namespace JsonConversion
+﻿namespace Core.Json
 {
     public class ProductV2
     {

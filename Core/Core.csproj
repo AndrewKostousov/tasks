@@ -50,6 +50,11 @@
   <ItemGroup>
     <Compile Include="Calc.cs" />
     <Compile Include="CalcTest.cs" />
+    <Compile Include="Json\ProductV2.cs" />
+    <Compile Include="Json\ProductV3.cs" />
+    <Compile Include="Json\ResultV2.cs" />
+    <Compile Include="Json\ResultV3.cs" />
+    <Compile Include="Json\WarehouseConverter.cs" />
     <Compile Include="JTraverse.cs" />
     <Compile Include="JsonPathTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 
+using Core.Json;
+
 using Newtonsoft.Json.Linq;
 
 namespace Core
@@ -13,6 +15,10 @@ namespace Core
         {
             var jObject = JObject.Parse(json);
             var data = jObject["data"];
+
+            if(data == null)
+                data = ConvertWarehouse(jObject["warehouse"]);
+
             var queries = jObject["queries"].ToObject<string[]>();
             return queries.Select(q =>
                 {
@@ -52,6 +58,11 @@ namespace Core
                     }
                     return string.Format("{0} = {1}", initialQuery, res);
                 });
+        }
+
+        private static JToken ConvertWarehouse(JToken jToken)
+        {
+            return JObject.Parse(WarehouseConverter.ConvertV2ToV3(jToken.ToString()));
         }
     }
 }

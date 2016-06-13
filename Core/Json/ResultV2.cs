@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace JsonConversion
+namespace Core.Json
 {
     public class ResultV2
     {
