@@ -33,10 +33,10 @@ namespace Core
                     if(query[0] == "data")
                         query = query.Skip(1).ToArray();
                     string res = "error";
-                    var values = new List<decimal>();
+                    var values = new List<double>();
                     try
                     {
-                        decimal result;
+                        double result;
                         JTraverse.Eval(query, values, -1, data);
                         switch(funcName)
                         {
@@ -50,7 +50,7 @@ namespace Core
                             result = values.Sum();
                             break;
                         }
-                        res = Math.Round(result, 4).ToString(CultureInfo.InvariantCulture);
+                        res = result.ToString(CultureInfo.InvariantCulture);
                     }
                     catch(Exception e)
                     {

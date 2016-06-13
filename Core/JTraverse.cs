@@ -8,7 +8,7 @@ namespace Core
 {
     public static class JTraverse
     {
-        public static void Eval(string[] query, List<decimal> values, int idx, JToken data)
+        public static void Eval(string[] query, List<double> values, int idx, JToken data)
         {
             if(data is JArray)
             {
@@ -27,7 +27,7 @@ namespace Core
             }
             if(idx == query.Length - 1)
             {
-                values.Add(data.Value<decimal>());
+                values.Add(data.Value<double>());
                 return;
             }
             var name = query[++idx];
