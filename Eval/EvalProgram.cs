@@ -20,12 +20,12 @@ namespace EvalTask
 
             if(input.Contains(","))
                 isComma = true;
-            input = input.Replace(",", ".");
+            input = input.Replace(",", ".").Replace("'", "");
             if (consts != null && consts.Any(pair => pair.Value.Contains(",")))
                 isComma = true;
             if(consts != null)
             {
-                consts = consts.ToDictionary(pair => pair.Key, pair => pair.Value.Replace(",", "."));
+                consts = consts.ToDictionary(pair => pair.Key, pair => pair.Value.Replace(",", ".").Replace("'", ""));
 
             }
             var expression = Calc.Replace(input, consts);
