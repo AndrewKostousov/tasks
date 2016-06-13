@@ -1,3 +1,5 @@
+using Core;
+
 using NUnit.Framework;
 
 namespace SimQLTask
@@ -8,7 +10,7 @@ namespace SimQLTask
         [Test]
         public void SumEmptyDataToZero()
         {
-            var results = SimQLProgram.ExecuteQueries(
+            var results = SimQL.ExecuteQueries(
                 "{" +
                 "'data': [], " +
                 "'queries': ['sum(item.cost)', 'sum(itemsCount)']}");
@@ -18,7 +20,7 @@ namespace SimQLTask
         [Test]
         public void SumSingleItem()
         {
-            var results = SimQLProgram.ExecuteQueries(
+            var results = SimQL.ExecuteQueries(
                 "{" +
                 "'data': [{'itemsCount':42}, {'foo':'bar'}], " +
                 "'queries': ['sum(itemsCount)']}");
