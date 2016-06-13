@@ -29,23 +29,13 @@ namespace JsonConversion
         private static ProductV3 Convert(KeyValuePair<string, ProductV2> v2, Dictionary<string, string> constants)
         {
             v2.Value.price = Calc.Replace(v2.Value.price, constants);
-            var productV3 = new ProductV3
+            return new ProductV3
                 {
                     count = v2.Value.count,
                     name = v2.Value.name,
                     price = Calc.Evaluate(v2.Value.price),
                     id = int.Parse(v2.Key)
                 };
-            if(v2.Value.size != null && v2.Value.size.Length != 0)
-            {
-                productV3.dimensions = new Dimensions
-                    {
-                        w =  v2.Value.size[0],
-                        h = v2.Value.size[1],
-                        l = v2.Value.size[2],
-                    };
-            }
-            return productV3;
         }
     }
 }
