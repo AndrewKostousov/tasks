@@ -10,6 +10,8 @@ namespace Core
         {
             if(data is JArray)
                 return data.Sum(item => Sum(query, idx, item));
+            if(data is JValue || !data.HasValues)
+                return default(decimal);
             var name = query[++idx];
             var token = data[name];
             if(token == null)
