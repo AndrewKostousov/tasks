@@ -1,3 +1,5 @@
+using System.Linq;
+
 using NUnit.Framework;
 
 namespace SimQLTask
@@ -12,7 +14,7 @@ namespace SimQLTask
                 "{" +
                 "'data': [], " +
                 "'queries': ['sum(item.cost)', 'sum(itemsCount)']}");
-            Assert.AreEqual(new[] {0, 0}, results);
+            Assert.AreEqual(new[] {0, 0}, results.Select(decimal.Parse));
         }
 
         [Test]
@@ -22,7 +24,7 @@ namespace SimQLTask
                 "{" +
                 "'data': [{'itemsCount':42}, {'foo':'bar'}], " +
                 "'queries': ['sum(itemsCount)']}");
-            Assert.AreEqual(new[] {42}, results);
+            Assert.AreEqual(new[] {42}, results.Select(decimal.Parse));
         }
     }
 }

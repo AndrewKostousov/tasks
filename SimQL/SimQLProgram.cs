@@ -17,19 +17,28 @@ namespace SimQLTask
 
         public static IEnumerable<string> ExecuteQueries(string json)
         {
-            yield return "data.a.x = 3.14";
-            yield return "data.a.b.c = 15";
-            yield return "data.a.c.c = 9";
-            yield return "data.z = 42";
+            var jObject = JObject.Parse(json);
+            var data = jObject["data"];
+            var queries = jObject["queries"].ToObject<string[]>();
+            return queries.Select(q =>
+                {
+                    var query = q.Substring(4, q.Length - 4 - 1).Split('.');
+                    return $"{Sum(query, -1, data)}";
+                });
         }
 
-        public static IEnumerable<string> ExecuteQueries2(string json)
+        public static decimal Sum(string[] query, int idx, JToken data)
         {
-            var jObject = JObject.Parse(json);
-            var data = (JObject)jObject["data"];
-            var queries = jObject["queries"].ToObject<string[]>();
-            // TODO
-            return queries.Select(q => "TODO");
+            if(data is JArray)
+                return data.Children().Sum(item => Sum(query, idx, item));
+            var name = query[++idx];
+            if(idx == query.Length - 1)
+            {
+                var prop = data[name];
+                return prop == null || prop.Type != JTokenType.Integer && prop.Type != JTokenType.Float ? 0 : data[name].Value<decimal>();
+            }
+            data = data[name];
+            return Sum(query, idx, data);
         }
     }
 }
