@@ -32,10 +32,7 @@ namespace JsonConversion
         private static ProductV3 Convert(KeyValuePair<string, ProductV2> v2, Dictionary<string, string> constants)
         {
             if (v2.Value == null)
-                return new ProductV3
-                    {
-                        id = int.Parse(v2.Key),
-                    };
+                return null;
             v2.Value.price = Calc.Replace(v2.Value.price, constants);
             var productV3 = new ProductV3
                 {
