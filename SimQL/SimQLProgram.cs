@@ -21,10 +21,11 @@ namespace SimQLTask
             var data = jObject["data"];
             var queries = jObject["queries"].ToObject<string[]>();
             return queries.Select(q =>
-                {
-                    var query = q.Substring(4, q.Length - 4 - 1).Split('.');
-                    return String.Format("{0}", Sum(query, -1, data));
-                });
+            {
+                var fix = q.StartsWith("sum(") ? q.Substring(4, q.Length - 4 - 1) : q;
+                var query = fix.Split('.');
+                return string.Format("{0} = {1}", fix, Sum(query, -1, data));
+            });
         }
 
         public static decimal Sum(string[] query, int idx, JToken data)
