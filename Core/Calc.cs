@@ -12,29 +12,43 @@ namespace Core
     {
         public static decimal Evaluate(string expression)
         {
-            Expression e = new Expression(expression);
-            e.EvaluateFunction += delegate(string name, FunctionArgs args)
+            expression = expression.ToLower();
+            if(expression.Contains("min") || expression.Contains("max") || expression.Contains("sqrt"))
             {
-                if (name == "sqrt")
-                    args.Result = Math.Sqrt(ToDouble(args.Parameters[0].Evaluate()));
-                if (name == "min")
-                    args.Result = Math.Min(ToDouble(args.Parameters[0].Evaluate()), ToDouble(args.Parameters[1].Evaluate()));
-                if (name == "max")
-                    args.Result = Math.Max(ToDouble(args.Parameters[0].Evaluate()), ToDouble(args.Parameters[1].Evaluate()));
-            };
-            
-            var o = e.Evaluate();
-            return (decimal)ToDouble(o);
-            /*expression = expression.ToLower();
+                Expression e = new Expression(expression);
+                e.EvaluateFunction += delegate(string name, FunctionArgs args)
+                    {
+                        if(name == "sqrt")
+                            args.Result = Math.Sqrt(ToDouble(args.Parameters[0].Evaluate()));
+                        if(name == "min")
+                            args.Result = Math.Min(ToDouble(args.Parameters[0].Evaluate()), ToDouble(args.Parameters[1].Evaluate()));
+                        if(name == "max")
+                            args.Result = Math.Max(ToDouble(args.Parameters[0].Evaluate()), ToDouble(args.Parameters[1].Evaluate()));
+                    };
+
+                var o = e.Evaluate();
+                return (decimal)ToDouble(o);
+            }
+            else
+            {
+                expression = expression.ToLower();
             var table = new DataTable();
             table.Columns.Add("expression", typeof(string), expression);
             var row = table.NewRow();
             table.Rows.Add(row);
-            return decimal.Parse((string)row["expression"]);*/
+            return decimal.Parse((string)row["expression"]);
+            }
         }
 
         private static double ToDouble(object o)
         {
+            try
+            {
+                return (double)o;
+            }
+            catch (Exception ee)
+            {
+            }
             try
             {
                 return (int)o;
@@ -42,13 +56,7 @@ namespace Core
             catch(Exception ee)
             {
             }
-            try
-            {
-                return (double)o;
-            }
-            catch(Exception ee)
-            {
-            }
+            
             return (double)(decimal)o;
         }
 
