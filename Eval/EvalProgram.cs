@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 
 using Core;
 
@@ -12,10 +13,15 @@ namespace EvalTask
     {
         private static void Main(string[] args)
         {
+            var isComma = false;
             var input = Console.In.ReadLine();
             var data = Console.In.ReadToEnd();
             var consts = JsonConvert.DeserializeObject<Dictionary<string, string>>(data);
 
+            if(input.Contains(","))
+                isComma = true;
+            if (consts.Any(pair => pair.Value.Contains(",")))
+                isComma = true;
             var expression = Calc.Replace(input, consts);
             string output;
             try
@@ -27,11 +33,15 @@ namespace EvalTask
                 Console.WriteLine("error");
                 return;
             }
-            
-            if (output.EndsWith(".0"))
+
+            if(output.EndsWith(".0"))
                 Console.WriteLine(output.Substring(0, output.Length - 2));
             else
+            {
+                if (isComma)
+                    Console.WriteLine(output.Replace(".", ","));
                 Console.WriteLine(output);
+            }
             Console.ReadLine();
         }
     }
