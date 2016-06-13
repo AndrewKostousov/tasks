@@ -40,11 +40,9 @@ namespace Core
                         case "max":
                             result = values.Max();
                             break;
-                        case "sum":
+                        default:
                             result = values.Sum();
                             break;
-                        default:
-                            throw new Exception("func is provided and array is encountered");
                         }
                         res = result.ToString(CultureInfo.InvariantCulture);
                     }

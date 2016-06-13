@@ -51,7 +51,7 @@ namespace SimQLTask
         [Test]
         public void Debug()
         {
-            var s = "{\"data\":{\"empty\":[],\"x\":[0.1,0.2,0.3],\"a\":[{\"b\":10,\"c\":[1,2,3]},{\"b\":30,\"c\":[4]},{\"d\":500}]},\"queries\":[\"sum(a.b)\",\"sum(a.c)\",\"sum(a.d)\",\"sum(x)\"]}";
+            var s = "{\"data\":{\"a\":{\"x\":3.14,\"b\":{\"c\":15},\"c\":{\"c\":9}},\"z\":42},\"queries\":[\"a.x\",\"a.b.c\",\"a.c.c\",\"z\"]}";
             var results = SimQL.ExecuteQueries(s).ToList();
             Console.WriteLine(results);
             Console.WriteLine(string.Join("\r\n", results));
