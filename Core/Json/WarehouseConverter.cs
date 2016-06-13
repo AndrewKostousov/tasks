@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 using Newtonsoft.Json;
 
@@ -11,7 +12,8 @@ namespace Core.Json
     {
         public static string FixV3(string json)
         {
-            var v3 = JsonConvert.DeserializeObject<ResultV3>(json);
+            var fix = Regex.Replace(json, @"""\d+(?:'\d+)*,\d+""", v => v.Value.Replace("\"", "").Replace("'", "").Replace(",", "."));
+            var v3 = JsonConvert.DeserializeObject<ResultV3>(fix);
             if(v3.version != "3")
                 throw new Exception();
             v3.products = v3.products == null ? null : v3.products.Select(product => FixV3(product, new Dictionary<string, string>())).ToArray();
@@ -68,7 +70,7 @@ namespace Core.Json
             if(v3.price == null)
                 return v3;
             var price = v3.price?.ToString(CultureInfo.InvariantCulture);
-            price = decimal.Parse(Calc.Replace(price, constants)).ToString(CultureInfo.InvariantCulture);
+            price = decimal.Parse(Calc.Replace(price, constants), CultureInfo.InvariantCulture).ToString(CultureInfo.InvariantCulture);
             v3.price = Calc.Evaluate(price);
             return v3;
         }
