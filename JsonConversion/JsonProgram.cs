@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using Core;
+
 using Newtonsoft.Json;
 
 namespace JsonConversion
@@ -20,7 +22,7 @@ namespace JsonConversion
                     products = v2.Products.Select(pair => Convert(pair, v2.Constants)).ToArray()
                 };
             Console.Write(JsonConvert.SerializeObject(v3));
-            //Console.ReadLine();
+            Console.ReadLine();
         }
 
         private static ProductV3 Convert(KeyValuePair<string, ProductV2> v2, Dictionary<string, string> constants)
@@ -30,14 +32,15 @@ namespace JsonConversion
                 {
                     count = v2.Value.count,
                     name = v2.Value.name,
-                    price = decimal.Parse(v2.Value.price),
+                    price = Calc.Evaluate(v2.Value.price),
                     id = int.Parse(v2.Key)
                 };
         }
 
         private static string Replace(string s, Dictionary<string, string> constants)
         {
-            var result = s.Split(new [] {" ", "+", "-", "(", ")", "*", "/"}, StringSplitOptions.None);
+            s = s.Replace("+", " + ").Replace("-", " - ").Replace("*", " * ").Replace("/", " / ").Replace("(", " ( ").Replace(")", " ) ");
+            var result = s.Split(new [] {" ", }, StringSplitOptions.None);
             
             foreach(var constant in constants)
             {
