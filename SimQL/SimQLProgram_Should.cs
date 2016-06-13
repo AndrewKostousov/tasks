@@ -33,7 +33,7 @@ namespace SimQLTask
         [Test]
         public void Test()
         {
-            var s = "{\"data\":{\"a\":{\"x\":3.14,\"b\":{\"c\":15},\"c\":{\"c\":9}},\"z\":42,\"q\":{}},\"queries\":[\"data.q\",\"data.a.x\",\"data.a.b.c\",\"data.a.c.c\",\"data.z\"]}";
+            var s = "{\"data\":{\"a\":{\"x\":3.14,\"b\":{\"c\":15},\"c\":{\"c\":9}},\"z\":42,\"q\":{}},\"queries\":[\"data.xyzy\",\"data.q\",\"data.a.x\",\"data.a.b.c\",\"data.a.c.c\",\"data.z\"]}";
             var results = SimQL.ExecuteQueries(s).ToList();
             Console.WriteLine(results);
             //Assert.AreEqual(new[] { "itemsCount = 42" }, results);

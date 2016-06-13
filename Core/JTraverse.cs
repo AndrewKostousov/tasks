@@ -8,12 +8,12 @@ namespace Core
     {
         public static decimal Sum(string[] query, int idx, JToken data)
         {
-            if(data is JArray)
-                return data.Sum(item => Sum(query, idx, item));
+            //if(data is JArray)
+                //return data.Sum(item => Sum(query, idx, item));
             var name = query[++idx];
             var token = data[name];
-            if(token == null)
-                return default(decimal);
+            //if(token == null)
+                //return default(decimal);
             if(idx == query.Length - 1)
                 return token.Value<decimal>();
             return Sum(query, idx, token);
