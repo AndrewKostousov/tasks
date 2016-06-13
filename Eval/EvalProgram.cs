@@ -25,10 +25,8 @@ namespace EvalTask
                 isComma = true;
             if(consts != null)
             {
-                foreach(var @const in consts)
-                {
-                    consts[@const.Key] = @const.Value.Replace(",", ".");
-                }
+                consts = consts.ToDictionary(pair => pair.Key, pair => pair.Value.Replace(",", "."));
+
             }
             var expression = Calc.Replace(input, consts);
             string output;
