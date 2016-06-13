@@ -12,7 +12,7 @@ namespace Core
     {
         public static decimal Evaluate(string expression)
         {
-            expression = expression.ToLower();
+            expression = expression.Replace(";", ",").ToLower();
             if(expression.Contains("min") || expression.Contains("max") || expression.Contains("sqrt"))
             {
                 Expression e = new Expression(expression);
