@@ -16,8 +16,8 @@ namespace SimQLTask
             var results = SimQL.ExecuteQueries(
                 "{" +
                 "'data': [], " +
-                "'queries': ['sum(item.cost)', 'sum(itemsCount)']}");
-            Assert.AreEqual(new[] {"item.cost = 0", "itemsCount = 0"}, results);
+                "'queries': ['item.cost', 'itemsCount']}");
+            Assert.AreEqual(new[] {"item.cost = error", "itemsCount = error"}, results);
         }
 
         [Test]
@@ -25,9 +25,9 @@ namespace SimQLTask
         {
             var results = SimQL.ExecuteQueries(
                 "{" +
-                "'data': [{'itemsCount':42}, {'foo':'bar'}], " +
+                "'data': [{'itemsCount':[42]}, {'foo':'bar'}], " +
                 "'queries': ['sum(itemsCount)']}");
-            Assert.AreEqual(new[] {"itemsCount = 42"}, results);
+            Assert.AreEqual(new[] {"sum(itemsCount) = 42"}, results);
         }
 
         [Test]

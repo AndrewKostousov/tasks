@@ -6,17 +6,27 @@ namespace Core
 {
     public static class JTraverse
     {
-        public static decimal Sum(string[] query, int idx, JToken data)
+        public static decimal Eval(string[] query, string funcName, int idx, JToken data)
         {
-            //if(data is JArray)
-                //return data.Sum(item => Sum(query, idx, item));
             var name = query[++idx];
             var token = data[name];
-            //if(token == null)
-                //return default(decimal);
             if(idx == query.Length - 1)
-                return token.Value<decimal>();
-            return Sum(query, idx, token);
+            {
+                {
+                    switch (funcName)
+                    {
+                        case "min":
+                            return token.Values<decimal>().Min();
+                        case "max":
+                            return token.Values<decimal>().Max();
+                        case "sum":
+                            return token.Values<decimal>().Sum();
+                        default:
+                            return token.Value<decimal>();
+                    }
+                }
+            }
+            return Eval(query, funcName, idx, token);
         }
     }
 }

@@ -15,16 +15,22 @@ namespace Core
             var queries = jObject["queries"].ToObject<string[]>();
             return queries.Select(q =>
                 {
-                    var fix = q.StartsWith("sum(") ? q.Substring(4, q.Length - 4 - 1) : q;
-                    var query = fix.Split('.');
+                    var initialQuery = q;
+                    string funcName = string.Empty;
+                    if(q.Contains('('))
+                    {
+                        funcName = q.Substring(0, 3).ToLower();
+                        q = q.Substring(4, q.Length - 4 - 1);
+                    }
+                    var query = q.Split('.');
                     if(query[0] == "data")
                         query = query.Skip(1).ToArray();
                     string res = "error";
                     try
                     {
-                        res = JTraverse.Sum(query, -1, data).ToString(CultureInfo.InvariantCulture);
+                        res = JTraverse.Eval(query, funcName, -1, data).ToString(CultureInfo.InvariantCulture);
                     } catch{}
-                    return string.Format("{0} = {1}", fix, res);
+                    return string.Format("{0} = {1}", initialQuery, res);
                 });
         }
     }
