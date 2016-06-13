@@ -23,7 +23,7 @@ namespace SimQLTask
             return queries.Select(q =>
                 {
                     var query = q.Substring(4, q.Length - 4 - 1).Split('.');
-                    return $"{Sum(query, -1, data)}";
+                    return String.Format("{0}", Sum(query, -1, data));
                 });
         }
 
