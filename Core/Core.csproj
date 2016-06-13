@@ -51,6 +51,7 @@
     <Compile Include="Calc.cs" />
     <Compile Include="CalcTest.cs" />
     <Compile Include="JTraverse.cs" />
+    <Compile Include="JsonPathTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SimQL.cs" />
   </ItemGroup>
