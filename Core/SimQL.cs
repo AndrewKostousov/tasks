@@ -50,7 +50,7 @@ namespace Core
                             result = values.Sum();
                             break;
                         }
-                        res = Math.Round(result, 5).ToString(CultureInfo.InvariantCulture);
+                        res = Math.Round(result, 4).ToString(CultureInfo.InvariantCulture);
                     }
                     catch(Exception e)
                     {

@@ -56,5 +56,13 @@ namespace SimQLTask
             Console.WriteLine(results);
             Console.WriteLine(string.Join("\r\n", results));
         }
+        [Test]
+        public void SimQL3()
+        {
+            var s = "{\"warehouse\":{\"version\":\"2\",\"constants\":{\"p\":375570429.0,\"BDT5b\":1895861230.0,\"pk6rq0teL\":2147483647.0,\"d801p5J6\":1994942430.0,\"GuuguI\":0.0},\"products\":{\"0\":{\"name\":\"RQbl0WfVY\",\"price\":\"(-84.06633771214)*(p)\",\"count\":881891749},\"1\":{\"name\":\"kDaf0Z\",\"price\":\"(12.1639563293028)+(p)\",\"count\":2147483647},\"304322859\":{\"name\":\"KcOi9dvy\",\"price\":\"(pk6rq0teL)/(-37.0159578216336)\",\"count\":1},\"1408114756\":{\"name\":\"v4N\",\"price\":\"(-85.7739047081088)/(37.9361148634628)\",\"count\":1},\"1889271802\":{\"name\":\"wtXpL\",\"price\":\"(13.8310322136763)*(58.0251485845191)\",\"count\":0},\"687275581\":{\"name\":\"bp\",\"price\":\"(-92.3887056263111)-(d801p5J6)\",\"count\":0},\"1732466776\":{\"name\":\"IohrwvzQ\",\"price\":\"(d801p5J6)+(41.3040054688715)\",\"count\":2147483647},\"2147483647\":{\"name\":\"Abap\",\"price\":\"(-59.916888624391)-(-66.5829328664499)\",\"count\":2147483647},\"517841970\":{\"name\":\"KD9S4\",\"price\":\"(58.4912672445603)/(p)\",\"count\":2147483647},\"1362982700\":{\"name\":\"9pH\",\"price\":\"(-54.4264007147524)/(-45.6487527795363)\",\"count\":1}}},\"queries\":[\"min(products.price)\",\"max(products.price)\",\"sum(products.price)\"]}";
+            var results = SimQL.ExecuteQueries(s).ToList();
+            Console.WriteLine(results);
+            Console.WriteLine(string.Join("\r\n", results));
+        }
     }
 }
