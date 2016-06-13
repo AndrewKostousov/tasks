@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 
 namespace Core
 {
@@ -28,7 +29,7 @@ namespace Core
                 {
                     if (result[i] == constant.Key)
                     {
-                        result[i] = constant.Value;
+                        result[i] = TryFixDecimal(constant.Value);
                     }
                 }
             }
@@ -43,6 +44,14 @@ namespace Core
             }
 
             return String.Join("", result);
+        }
+
+        private static string TryFixDecimal(string value)
+        {
+            decimal res;
+            if(decimal.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out res) || decimal.TryParse(value, NumberStyles.Any, CultureInfo.GetCultureInfo("ru-RU"), out res))
+                return res.ToString(CultureInfo.InvariantCulture);
+            return value;
         }
     }
 }
