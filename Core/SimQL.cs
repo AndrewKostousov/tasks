@@ -50,7 +50,7 @@ namespace Core
                             result = values.Sum();
                             break;
                         }
-                        res = result.ToString(CultureInfo.InvariantCulture);
+                        res = result.ToString("F4", CultureInfo.InvariantCulture);
                     }
                     catch(Exception e)
                     {
