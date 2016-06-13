@@ -11,8 +11,8 @@
 
     public class Dimensions
     {
-        public int l { get; set; }
-        public int w { get; set; }
-        public int h { get; set; }
+        public decimal l { get; set; }
+        public decimal w { get; set; }
+        public decimal h { get; set; }
     }
 }
