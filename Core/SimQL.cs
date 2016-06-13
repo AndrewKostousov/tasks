@@ -19,7 +19,12 @@ namespace Core
                     var query = fix.Split('.');
                     if(query[0] == "data")
                         query = query.Skip(1).ToArray();
-                    return string.Format("{0} = {1}", fix, JTraverse.Sum(query, -1, data).ToString(CultureInfo.InvariantCulture));
+                    string res = "error";
+                    try
+                    {
+                        res = JTraverse.Sum(query, -1, data).ToString(CultureInfo.InvariantCulture);
+                    } catch{}
+                    return string.Format("{0} = {1}", fix, res);
                 });
         }
     }

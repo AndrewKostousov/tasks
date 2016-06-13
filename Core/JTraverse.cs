@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 using Newtonsoft.Json.Linq;
 
@@ -11,7 +12,7 @@ namespace Core
             if(data is JArray)
                 return data.Sum(item => Sum(query, idx, item));
             if(data is JValue || !data.HasValues)
-                return default(decimal);
+                throw new Exception();
             var name = query[++idx];
             var token = data[name];
             if(token == null)
