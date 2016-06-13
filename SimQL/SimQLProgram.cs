@@ -17,10 +17,10 @@ namespace SimQLTask
 
         public static IEnumerable<string> ExecuteQueries(string json)
         {
-            yield return "data.a.x = 3.14";
-            yield return "data.a.b.c = 15";
-            yield return "data.a.c.c = 9";
-            yield return "data.z = 42";
+            yield return "a.x = 3.14";
+            yield return "a.b.c = 15";
+            yield return "a.c.c = 9";
+            yield return "z = 42";
         }
 
         public static IEnumerable<string> ExecuteQueries2(string json)
