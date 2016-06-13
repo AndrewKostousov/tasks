@@ -39,5 +39,22 @@ namespace SimQLTask
             //Assert.AreEqual(new[] { "itemsCount = 42" }, results);
             Console.WriteLine(string.Join("\r\n", results));
         }
+
+        [Test]
+        public void TestFunc()
+        {
+            var s = "{\"data\":{\"empty\":[],\"x\":[0.1,0.2,0.3],\"a\":[{\"b\":10,\"c\":[1,2,3]},{\"b\":30,\"c\":[4]},{\"d\":500}]},\"queries\":[\"sum(empty)\",\"sum(a.b)\",\"sum(a.c)\",\"sum(a.d)\",\"sum(x)\"]}";
+            var results = SimQL.ExecuteQueries(s).ToList();
+            Console.WriteLine(results);
+            Console.WriteLine(string.Join("\r\n", results));
+        }
+        [Test]
+        public void Debug()
+        {
+            var s = "{\"data\":{\"empty\":[],\"x\":[0.1,0.2,0.3],\"a\":[{\"b\":10,\"c\":[1,2,3]},{\"b\":30,\"c\":[4]},{\"d\":500}]},\"queries\":[\"sum(a.b)\",\"sum(a.c)\",\"sum(a.d)\",\"sum(x)\"]}";
+            var results = SimQL.ExecuteQueries(s).ToList();
+            Console.WriteLine(results);
+            Console.WriteLine(string.Join("\r\n", results));
+        }
     }
 }

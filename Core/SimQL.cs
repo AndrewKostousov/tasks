@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 
@@ -26,10 +27,31 @@ namespace Core
                     if(query[0] == "data")
                         query = query.Skip(1).ToArray();
                     string res = "error";
+                    var values = new List<decimal>();
                     try
                     {
-                        res = JTraverse.Eval(query, funcName, -1, data).ToString(CultureInfo.InvariantCulture);
-                    } catch{}
+                        decimal result;
+                        JTraverse.Eval(query, values, -1, data);
+                        switch(funcName)
+                        {
+                        case "min":
+                            result = values.Min();
+                            break;
+                        case "max":
+                            result = values.Max();
+                            break;
+                        case "sum":
+                            result = values.Sum();
+                            break;
+                        default:
+                            throw new Exception("func is provided and array is encountered");
+                        }
+                        res = result.ToString(CultureInfo.InvariantCulture);
+                    }
+                    catch(Exception e)
+                    {
+                        Console.Out.WriteLine(e);
+                    }
                     return string.Format("{0} = {1}", initialQuery, res);
                 });
         }

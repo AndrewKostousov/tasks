@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 using Newtonsoft.Json.Linq;
 
@@ -6,27 +8,31 @@ namespace Core
 {
     public static class JTraverse
     {
-        public static decimal Eval(string[] query, string funcName, int idx, JToken data)
+        public static void Eval(string[] query, List<decimal> values, int idx, JToken data)
         {
-            var name = query[++idx];
-            var token = data[name];
-            if(idx == query.Length - 1)
+            if(data is JArray)
             {
+                foreach(var d in data)
                 {
-                    switch (funcName)
+                    try
                     {
-                        case "min":
-                            return token.Values<decimal>().Min();
-                        case "max":
-                            return token.Values<decimal>().Max();
-                        case "sum":
-                            return token.Values<decimal>().Sum();
-                        default:
-                            return token.Value<decimal>();
+                        Eval(query, values, idx, d);
+                    }
+                    catch(Exception)
+                    {
+                        
                     }
                 }
+                return;
             }
-            return Eval(query, funcName, idx, token);
+            if(idx == query.Length - 1)
+            {
+                values.Add(data.Value<decimal>());
+                return;
+            }
+            var name = query[++idx];
+            var token = data[name];
+            Eval(query, values, idx, token);
         }
     }
 }
