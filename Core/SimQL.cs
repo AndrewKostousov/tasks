@@ -16,7 +16,7 @@ namespace Core
             return queries.Select(q =>
                 {
                     var fix = q.StartsWith("sum(") ? q.Substring(4, q.Length - 4 - 1) : q;
-                    var query = fix.Split('.');
+                    var query = fix.Split('.').Skip(1).ToArray();
                     return string.Format("{0} = {1}", fix, JTraverse.Sum(query, -1, data).ToString(CultureInfo.InvariantCulture));
                 });
         }

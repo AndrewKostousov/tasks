@@ -15,7 +15,7 @@ namespace Core
             if(token == null)
                 return default(decimal);
             if(idx == query.Length - 1)
-                return token.Type != JTokenType.Integer && token.Type != JTokenType.Float ? default(decimal) : token.Value<decimal>();
+                return token.Type == JTokenType.Integer || token.Type == JTokenType.Float ? token.Value<decimal>() : default(decimal);
             return Sum(query, idx, token);
         }
     }
