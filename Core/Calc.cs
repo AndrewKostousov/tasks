@@ -1,4 +1,6 @@
-﻿using System.Data;
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
 
 namespace Core
 {
@@ -11,6 +13,36 @@ namespace Core
             var row = table.NewRow();
             table.Rows.Add(row);
             return decimal.Parse((string)row["expression"]);
+        }
+
+        public static string Replace(string s, Dictionary<string, string> constants)
+        {
+            if (constants == null || constants.Count == 0)
+                return s;
+            s = s.Replace("+", " + ").Replace("-", " - ").Replace("*", " * ").Replace("/", " / ").Replace("(", " ( ").Replace(")", " ) ");
+            var result = s.Split(new[] { " ", }, StringSplitOptions.RemoveEmptyEntries);
+
+            foreach (var constant in constants)
+            {
+                for (var i = 0; i < result.Length; ++i)
+                {
+                    if (result[i] == constant.Key)
+                    {
+                        result[i] = constant.Value;
+                    }
+                }
+            }
+
+            var set = new HashSet<string> { "+", "-", "*", "/", "(", ")" };
+            for (var i = 0; i < result.Length; ++i)
+            {
+                if (!set.Contains(result[i]) && !result[i].Contains("."))
+                {
+                    result[i] = result[i] + ".0";
+                }
+            }
+
+            return String.Join("", result);
         }
     }
 }

@@ -28,7 +28,7 @@ namespace JsonConversion
 
         private static ProductV3 Convert(KeyValuePair<string, ProductV2> v2, Dictionary<string, string> constants)
         {
-            v2.Value.price = Replace(v2.Value.price, constants);
+            v2.Value.price = Calc.Replace(v2.Value.price, constants);
             return new ProductV3
                 {
                     count = v2.Value.count,
@@ -36,36 +36,6 @@ namespace JsonConversion
                     price = Calc.Evaluate(v2.Value.price),
                     id = int.Parse(v2.Key)
                 };
-        }
-
-        private static string Replace(string s, Dictionary<string, string> constants)
-        {
-            if(constants == null || constants.Count == 0)
-                return s;
-            s = s.Replace("+", " + ").Replace("-", " - ").Replace("*", " * ").Replace("/", " / ").Replace("(", " ( ").Replace(")", " ) ");
-            var result = s.Split(new [] {" ", }, StringSplitOptions.RemoveEmptyEntries);
-            
-            foreach(var constant in constants)
-            {
-                for(var i = 0; i < result.Length; ++i)
-                {
-                    if(result[i] == constant.Key)
-                    {
-                        result[i] = constant.Value;
-                    }
-                }
-            }
-
-            var set = new HashSet<string> {"+", "-", "*", "/", "(", ")"};
-            for (var i = 0; i < result.Length; ++i)
-            {
-                if (!set.Contains(result[i]) && !result[i].Contains("."))
-                {
-                    result[i] = result[i] + ".0";
-                }
-            }
-
-            return String.Join("", result);
         }
     }
 }
