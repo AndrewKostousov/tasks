@@ -16,7 +16,18 @@ namespace EvalTask
             var data = Console.In.ReadToEnd();
             var consts = JsonConvert.DeserializeObject<Dictionary<string, string>>(data);
 
-            var output = Calc.Evaluate(Calc.Replace(input, consts)).ToString(CultureInfo.InvariantCulture);
+            var expression = Calc.Replace(input, consts);
+            string output;
+            try
+            {
+                output = Calc.Evaluate(expression).ToString(CultureInfo.InvariantCulture);
+            }
+            catch(Exception)
+            {
+                Console.WriteLine("Bad input");
+                return;
+            }
+            
             if (output.EndsWith(".0"))
                 Console.WriteLine(output.Substring(0, output.Length - 2));
             else
