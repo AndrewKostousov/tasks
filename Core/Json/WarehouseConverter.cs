@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 using Newtonsoft.Json;
@@ -7,6 +9,19 @@ namespace Core.Json
 {
     public static class WarehouseConverter
     {
+        public static string FixV3(string json)
+        {
+            var v3 = JsonConvert.DeserializeObject<ResultV3>(json);
+            if(v3.version != "3")
+                throw new Exception();
+            v3.products = v3.products == null ? null : v3.products.Select(product => FixV3(product, new Dictionary<string, string>())).ToArray();
+            var serializeObject = JsonConvert.SerializeObject(v3, new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            });
+            return serializeObject;
+        }
+
         public static string ConvertV2ToV3(string json)
         {
             var v2 = JsonConvert.DeserializeObject<ResultV2>(json);
@@ -44,6 +59,18 @@ namespace Core.Json
                     };
             }
             return productV3;
+        }
+
+        private static ProductV3 FixV3(ProductV3 v3, Dictionary<string, string> constants)
+        {
+            if(v3 == null)
+                return null;
+            if(v3.price == null)
+                return v3;
+            var price = v3.price?.ToString(CultureInfo.InvariantCulture);
+            price = decimal.Parse(Calc.Replace(price, constants)).ToString(CultureInfo.InvariantCulture);
+            v3.price = Calc.Evaluate(price);
+            return v3;
         }
     }
 }
