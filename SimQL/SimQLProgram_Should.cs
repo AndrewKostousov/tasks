@@ -37,6 +37,7 @@ namespace SimQLTask
             var results = SimQL.ExecuteQueries(s).ToList();
             Console.WriteLine(results);
             //Assert.AreEqual(new[] { "itemsCount = 42" }, results);
+            Console.WriteLine(string.Join("\r\n", results));
         }
     }
 }
