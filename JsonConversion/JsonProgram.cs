@@ -39,6 +39,8 @@ namespace JsonConversion
 
         private static string Replace(string s, Dictionary<string, string> constants)
         {
+            if(constants == null || constants.Count == 0)
+                return s;
             s = s.Replace("+", " + ").Replace("-", " - ").Replace("*", " * ").Replace("/", " / ").Replace("(", " ( ").Replace(")", " ) ");
             var result = s.Split(new [] {" ", }, StringSplitOptions.None);
             
