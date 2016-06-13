@@ -24,7 +24,7 @@ namespace EvalTask
             }
             catch(Exception)
             {
-                Console.WriteLine("Bad input");
+                Console.WriteLine("error");
                 return;
             }
             
