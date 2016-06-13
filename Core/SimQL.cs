@@ -50,7 +50,7 @@ namespace Core
                     }
                     catch(Exception e)
                     {
-                        Console.Out.WriteLine(e);
+                        Console.Error.WriteLine(e);
                     }
                     return string.Format("{0} = {1}", initialQuery, res);
                 });
