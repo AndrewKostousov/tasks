@@ -20,7 +20,7 @@ namespace JsonConversion
             var v3 = new ResultV3
                 {
                     version = "3",
-                    products = v2.Products.Select(pair => Convert(pair, v2.Constants)).ToArray()
+                    products = v2.Products == null ? null : v2.Products.Select(pair => Convert(pair, v2.Constants)).ToArray()
                 };
             Console.Write(JsonConvert.SerializeObject(v3, new JsonSerializerSettings
                 {
