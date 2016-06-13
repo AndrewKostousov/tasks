@@ -20,7 +20,7 @@ namespace Core
         {
             if (constants == null || constants.Count == 0)
                 return s;
-            s = s.Replace("+", " + ").Replace("-", " - ").Replace("*", " * ").Replace("/", " / ").Replace("(", " ( ").Replace(")", " ) ");
+            s = s.Replace("+", " + ").Replace("-", " - ").Replace("*", " * ").Replace("/", " / ").Replace("(", " ( ").Replace(")", " ) ").Replace(',', '.');
             var result = s.Split(new[] { " ", }, StringSplitOptions.RemoveEmptyEntries);
 
             foreach (var constant in constants)
