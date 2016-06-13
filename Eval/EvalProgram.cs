@@ -18,9 +18,12 @@ namespace EvalTask
             var data = Console.In.ReadToEnd();
             var consts = JsonConvert.DeserializeObject<Dictionary<string, string>>(data);
 
-            if(input.Contains(","))
-                isComma = true;
-            input = input.Replace(",", ".").Replace("'", "");
+
+            if (!input.Contains("min") && !input.Contains("max") && !input.Contains("sqrt")) { 
+                if(input.Contains(","))
+                    isComma = true;
+                input = input.Replace(",", ".").Replace("'", "");
+            }
             if (consts != null && consts.Any(pair => pair.Value.Contains(",")))
                 isComma = true;
             if(consts != null)
@@ -34,7 +37,7 @@ namespace EvalTask
             {
                 output = Calc.Evaluate(expression).ToString(CultureInfo.InvariantCulture);
             }
-            catch(Exception)
+            catch(Exception e)
             {
                 Console.WriteLine("error");
                 return;

@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+
 using System.Data;
 using System.Globalization;
+
+using NCalc;
 
 namespace Core
 {
@@ -9,11 +12,44 @@ namespace Core
     {
         public static decimal Evaluate(string expression)
         {
+            Expression e = new Expression(expression);
+            e.EvaluateFunction += delegate(string name, FunctionArgs args)
+            {
+                if (name == "sqrt")
+                    args.Result = Math.Sqrt(ToDouble(args.Parameters[0].Evaluate()));
+                if (name == "min")
+                    args.Result = Math.Min(ToDouble(args.Parameters[0].Evaluate()), ToDouble(args.Parameters[1].Evaluate()));
+                if (name == "max")
+                    args.Result = Math.Max(ToDouble(args.Parameters[0].Evaluate()), ToDouble(args.Parameters[1].Evaluate()));
+            };
+            
+            var o = e.Evaluate();
+            return (decimal)ToDouble(o);
+            /*expression = expression.ToLower();
             var table = new DataTable();
             table.Columns.Add("expression", typeof(string), expression);
             var row = table.NewRow();
             table.Rows.Add(row);
-            return decimal.Parse((string)row["expression"]);
+            return decimal.Parse((string)row["expression"]);*/
+        }
+
+        private static double ToDouble(object o)
+        {
+            try
+            {
+                return (int)o;
+            }
+            catch(Exception ee)
+            {
+            }
+            try
+            {
+                return (double)o;
+            }
+            catch(Exception ee)
+            {
+            }
+            return (double)(decimal)o;
         }
 
         public static string Replace(string s, Dictionary<string, string> constants)
@@ -43,8 +79,7 @@ namespace Core
                 }
             }
 
-            return String.Join("", result);
-        }
+            return String.Join("", result);}
 
         private static string TryFixDecimal(string value)
         {
