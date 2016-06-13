@@ -20,8 +20,16 @@ namespace EvalTask
 
             if(input.Contains(","))
                 isComma = true;
+            input = input.Replace(",", ".");
             if (consts != null && consts.Any(pair => pair.Value.Contains(",")))
                 isComma = true;
+            if(consts != null)
+            {
+                foreach(var @const in consts)
+                {
+                    consts[@const.Key] = @const.Value.Replace(",", ".");
+                }
+            }
             var expression = Calc.Replace(input, consts);
             string output;
             try
@@ -40,7 +48,8 @@ namespace EvalTask
             {
                 if (isComma)
                     Console.WriteLine(output.Replace(".", ","));
-                Console.WriteLine(output);
+                else
+                    Console.WriteLine(output);
             }
             Console.ReadLine();
         }
