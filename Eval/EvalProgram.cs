@@ -20,7 +20,7 @@ namespace EvalTask
 
             if(input.Contains(","))
                 isComma = true;
-            if (consts.Any(pair => pair.Value.Contains(",")))
+            if (consts != null && consts.Any(pair => pair.Value.Contains(",")))
                 isComma = true;
             var expression = Calc.Replace(input, consts);
             string output;
