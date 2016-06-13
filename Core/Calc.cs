@@ -49,7 +49,7 @@ namespace Core
         private static string TryFixDecimal(string value)
         {
             decimal res;
-            if(decimal.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out res) || decimal.TryParse(value, NumberStyles.Any, CultureInfo.GetCultureInfo("ru-RU"), out res))
+            if(decimal.TryParse(value.Replace(',', '.'), NumberStyles.Any, CultureInfo.InvariantCulture, out res))
                 return res.ToString(CultureInfo.InvariantCulture);
             return value;
         }
